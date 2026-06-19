@@ -1,13 +1,13 @@
-const users = [
-  { id: 1, username: "aliceInChains", name: "Alice" },
-  { id: 2, username: "bobHarley", name: "Bob" },
-  { id: 3, username: "charlieX", name: "Charlie" },
-];
+import { eq} from "drizzle-orm";
+import { db } from "../../db";
+import { users } from '../../db/schema';
 
-export const getUsers = () => {
-  return users;
+export const getUsers = async () => {
+  return db.query.users.findMany();
 };
 
-export const getUserById = (id: number): typeof users[0] | null => {
-    return users.find((user) => user.id === id) || null;
+export const getUserById = async (id: number) => {
+    return db.query.users.findFirst({
+      where: eq(users.id, id)
+    });
 }

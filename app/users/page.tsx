@@ -2,7 +2,7 @@ import Link from "next/link";
 import { getUsers } from "../services/users";
 
 const Users = async () => {
-  const usersList = getUsers();
+  const usersList = await getUsers();
 
   return (
     <div>

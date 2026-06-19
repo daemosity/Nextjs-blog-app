@@ -3,7 +3,7 @@ import { getUserById } from "../../services/users";
 
 const UserPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
-  const user = getUserById(Number(id));
+  const user = await getUserById(Number(id));
 
   if (!user) {
     notFound();
