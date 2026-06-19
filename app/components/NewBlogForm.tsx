@@ -1,41 +1,27 @@
 "use client";
 
+import { useActionState } from "react";
 import { createBlog } from "@/app/actions/blogs";
 
 const NewBlogForm = () => {
+  const [state, formAction] = useActionState(createBlog, { error: "" });
+
   return (
-    <form action={createBlog}>
+    <form action={formAction}>
       <div>
         <label htmlFor="title">Title:</label>
-        <input
-          type="text"
-          name="title"
-          placeholder="Title"
-          required
-          minLength={5}
-        />
+        <input type="text" name="title" placeholder="Title" />
       </div>
       <div>
         <label htmlFor="author">Author:</label>
-        <input
-          type="text"
-          name="author"
-          placeholder="Author"
-          required
-          minLength={5}
-        />
+        <input type="text" name="author" placeholder="Author" />
       </div>
       <div>
         <label htmlFor="url">URL:</label>
-        <input
-          type="text"
-          name="url"
-          placeholder="url"
-          required
-          minLength={5}
-        />
+        <input type="text" name="url" placeholder="url" />
       </div>
       <button type="submit">Submit</button>
+      {state.error && <p style={{ color: "red" }}>{state.error}</p>}
     </form>
   );
 };

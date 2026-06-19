@@ -5,7 +5,10 @@ import { revalidatePath } from "next/cache";
 import { addBlog, incrementLike } from "@/app/services/blogs";
 import { auth } from "@/auth";
 
-export const createBlog = async (formData: FormData) => {
+export const createBlog = async (
+  prevState: { error: string }, 
+  formData: FormData
+) => {
   const session = await auth()
 
   if (!session) {
@@ -15,8 +18,8 @@ export const createBlog = async (formData: FormData) => {
   const title = formData.get("title") as string;
   const author = formData.get("author") as string;
   const url = formData.get("url") as string;
-  if (title.length < 5 || author.length < 5 || url.length < 5) {
-    throw new Error("All fields must be at least 5 characters long.");
+  if (!(title?.length > 4) || !(author?.length > 4) || !(url?.length > 4)) {
+    return { error: "All fields must be at least 5 characters long." };
   }
 
   await addBlog(title, author, url);
