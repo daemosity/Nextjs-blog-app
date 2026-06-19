@@ -11,6 +11,7 @@ export const createBlog = async (formData: FormData) => {
   if (!session) {
     redirect("/login")
   }
+
   const title = formData.get("title") as string;
   const author = formData.get("author") as string;
   const url = formData.get("url") as string;
@@ -18,6 +19,7 @@ export const createBlog = async (formData: FormData) => {
   await addBlog(title, author, url);
 
   revalidatePath("/blogs");
+  if (session.user)  revalidatePath(`/users/${session.user.email}`);
   redirect("/blogs");
 };
 

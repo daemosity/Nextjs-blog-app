@@ -1,6 +1,7 @@
 "use server"
 
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 import bcrypt from "bcryptjs";
 import { db } from "@/db";
 import { users } from "@/db/schema";
@@ -13,6 +14,7 @@ export const registerUser = async (formData: FormData) => {
   const passwordHash = await bcrypt.hash(password, 10);
 
   await db.insert(users).values({ username, name, passwordHash });
-
+  
+  revalidatePath("/users");
   redirect("/login");
 }
