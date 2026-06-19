@@ -15,6 +15,9 @@ export const createBlog = async (formData: FormData) => {
   const title = formData.get("title") as string;
   const author = formData.get("author") as string;
   const url = formData.get("url") as string;
+  if (title.length < 5 || author.length < 5 || url.length < 5) {
+    throw new Error("All fields must be at least 5 characters long.");
+  }
 
   await addBlog(title, author, url);
 
