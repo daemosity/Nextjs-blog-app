@@ -15,6 +15,13 @@
       "when": 1781829217622,
       "tag": "0001_cool_tusk",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1781834888388,
+      "tag": "0002_busy_justin_hammer",
+      "breakpoints": true
     }
   ]
 }

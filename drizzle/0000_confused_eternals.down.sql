@@ -1,0 +1,11 @@
+-- drizzle-rollback:stub
+DROP TABLE "blogs";
+--> statement-breakpoint
+-- WARNING: drizzle-rollback could not auto-reverse the following change(s); write the reverse by hand:
+-- top-level policies changed
+--> statement-breakpoint
+-- WARNING: drizzle-rollback could not auto-reverse the following change(s); write the reverse by hand:
+-- views changed
+--> statement-breakpoint
+-- WARNING: drizzle-rollback could not auto-reverse the following change(s); write the reverse by hand:
+-- roles changed

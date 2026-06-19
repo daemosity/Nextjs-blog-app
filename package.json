@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "db:generate": "drizzle-kit generate && drizzle-rollback generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:rollback": "drizzle-rollback down"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",
@@ -22,6 +25,7 @@
     "@types/react-dom": "^19",
     "dotenv": "^17.4.2",
     "drizzle-kit": "^0.31.10",
+    "drizzle-rollback": "^0.2.1",
     "eslint": "^9",
     "eslint-config-next": "16.2.9",
     "postgres": "^3.4.9",
