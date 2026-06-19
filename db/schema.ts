@@ -5,8 +5,15 @@ export const blogsTable = pgTable("blogs", {
   title: text("title").notNull(),
   author: text("author").notNull(),
   url: text("url").notNull(),
-  likes: integer("likes").notNull().default(0)
+  likes: integer("likes").notNull().default(0),
+  userId: integer("user_id").references(() => users.id),
 });
 
 export type InsertBlog = typeof blogsTable.$inferInsert;
 export type SelectBlog = typeof blogsTable.$inferSelect;
+
+export const users = pgTable("users", {
+  id: serial("id").primaryKey(),
+  username: text("name").notNull().unique(),
+  name: text("email").notNull()
+});
