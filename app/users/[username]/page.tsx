@@ -18,14 +18,21 @@ const UserPage = async ({
     <div>
       <h1>{user.username}</h1>
       <p>IRL Name: {user.name}</p>
-      <h2>Blog Submissions</h2>
-      <ul>
-        {user.blogs.map((blog) => (
-          <li key={blog.id}>
-            <Link href={`/blogs/${blog.id}`}>{blog.title}</Link>
-          </li>
-        ))}
-      </ul>
+      <hr />
+      {user.blogs.length > 0 ? (
+        <>
+          <h3>Blog Submissions</h3>
+          <ul>
+            {user.blogs.map((blog) => (
+              <li key={blog.id}>
+                <Link href={`/blogs/${blog.id}`}>{blog.title}</Link>
+              </li>
+            ))}
+          </ul>
+        </>
+      ) : (
+        <h3>No blogs submitted... yet.</h3>
+      )}
     </div>
   );
 };
