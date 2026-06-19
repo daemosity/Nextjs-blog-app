@@ -1,4 +1,4 @@
 const Home = () => {
-  return <div>hello next.js</div>;
+  return <div>Welcome to Blogster!</div>;
 };
 export default Home;

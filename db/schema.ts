@@ -16,7 +16,8 @@ export type SelectBlog = typeof blogsTable.$inferSelect;
 export const users = pgTable("users", {
   id: serial("id").primaryKey(),
   username: text("username").notNull().unique(),
-  name: text("name").notNull()
+  name: text("name").notNull(),
+  passwordHash: text("password_hash").notNull().default(""),
 });
 
 export const usersRelations = relations(users, ({ many }) => ({

@@ -1,6 +1,12 @@
 import { createBlog } from "@/app/actions/blogs";
+import { redirect } from "next/navigation";
+import { auth } from "@/auth";
 
-const NewBlog = () => {
+const NewBlog = async () => {
+  const session = await auth();
+  if (!session?.user?.email) {
+    redirect("/login");
+  }
   return (
     <div>
       <h2>Create New Blog</h2>
