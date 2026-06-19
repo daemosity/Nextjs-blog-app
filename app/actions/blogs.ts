@@ -5,9 +5,18 @@ import { revalidatePath } from "next/cache";
 import { addBlog, incrementLike } from "@/app/services/blogs";
 import { auth } from "@/auth";
 
+export type BlogFormState = {
+  error: string;
+  values?: {
+    title?: string;
+    author?: string;
+    url?: string;
+  };
+};
+
 export const createBlog = async (
-  prevState: { error: string }, 
-  formData: FormData
+  prevState: BlogFormState,
+  formData: FormData,
 ) => {
   const session = await auth()
 
@@ -19,14 +28,23 @@ export const createBlog = async (
   const author = formData.get("author") as string;
   const url = formData.get("url") as string;
   if (!(title?.length > 4) || !(author?.length > 4) || !(url?.length > 4)) {
-    return { error: "All fields must be at least 5 characters long." };
+    const failedBlogFormState: BlogFormState = { 
+        error: "All fields must be at least 5 characters long.", 
+        values: { title, author, url } 
+      };
+    return failedBlogFormState;
   }
 
   await addBlog(title, author, url);
 
   revalidatePath("/blogs");
   if (session.user)  revalidatePath(`/users/${session.user.email}`);
-  redirect("/blogs");
+
+  const resetBlogFormState: BlogFormState = { 
+    error: "", 
+    values: { title: "", author: "", url: "" } 
+  };
+  redirect("/blogs")
 };
 
 export const addLike = async (formData: FormData) => {
