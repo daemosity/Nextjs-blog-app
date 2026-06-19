@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getBlogs } from "../services/blogs";
+import { getBlogs } from "@/app/services/blogs";
 
 const Blogs = async ({
   searchParams,

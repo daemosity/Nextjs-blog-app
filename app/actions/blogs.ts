@@ -2,12 +2,12 @@
 
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
-import { addBlog, incrementLike } from "../services/blogs";
+import { addBlog, incrementLike } from "@/app/services/blogs";
 import { auth } from "@/auth";
 
 export const createBlog = async (formData: FormData) => {
   const session = await auth()
-  
+
   if (!session) {
     redirect("/login")
   }

@@ -1,6 +1,6 @@
 import { eq, ilike} from "drizzle-orm";
-import { db } from "../../db";
-import { blogsTable, SelectBlog } from '../../db/schema';
+import { db } from "@/db";
+import { blogsTable, SelectBlog } from '@/db/schema';
 import { getCurrentUser } from "./session";
 
 export const getBlogs = async (filter: string = ''): Promise<SelectBlog[]> => {

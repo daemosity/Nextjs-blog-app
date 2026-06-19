@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { getUserByUsername } from "../../services/users";
+import { getUserByUsername } from "@/app/services/users";
 import Link from "next/link";
 
 const UserPage = async ({
