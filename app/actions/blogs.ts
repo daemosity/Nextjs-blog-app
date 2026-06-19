@@ -16,7 +16,7 @@ export const createBlog = async (formData: FormData) => {
 
 export const addLike = async (formData: FormData) => {
   const id = Number(formData.get("id"));
-  incrementLike(id);
+  await incrementLike(id);
   revalidatePath(`/blogs/${id}`);
   revalidatePath("/blogs");
 };
