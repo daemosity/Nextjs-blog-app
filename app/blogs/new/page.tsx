@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 
-import NewBlogForm from "@/app/components/NewBlogForm";
+import NewBlogForm from "./NewBlogForm";
 
 const NewBlog = async () => {
   const session = await auth();
