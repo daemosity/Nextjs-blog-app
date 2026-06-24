@@ -29,6 +29,13 @@
       "when": 1781883420859,
       "tag": "0003_free_silver_sable",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1782337636190,
+      "tag": "0004_elite_zarek",
+      "breakpoints": true
     }
   ]
 }
