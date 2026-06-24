@@ -19,3 +19,7 @@ export const getUserByUsername = async (username: string) => {
         with: { blogs: true || false },
     });
 }
+
+export const updateToken = async (username: string, token: string) => {
+    return db.update(users).set({token}).where(eq(users.username, username));
+}

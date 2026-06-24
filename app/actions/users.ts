@@ -3,9 +3,10 @@
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import bcrypt from "bcryptjs";
+import { randomUUID } from "crypto";
 import { db } from "@/db";
 import { users } from "@/db/schema";
-import { getUserByUsername } from '../services/users';
+import { getUserByUsername, updateToken } from '../services/users';
 
 export type RegistrationFormData = {
   error: string;
@@ -62,4 +63,14 @@ export const registerUser = async (
 
   revalidatePath("/users");
   redirect("/login");
+}
+
+export const generateNewToken = async (formData: FormData) => {
+  const username = formData.get("username");
+  if (!username) return;
+
+  const newToken = randomUUID();
+  await updateToken(String(username), newToken);
+
+  revalidatePath("/me");
 }
