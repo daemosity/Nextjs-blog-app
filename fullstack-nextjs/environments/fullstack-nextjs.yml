@@ -1,0 +1,4 @@
+name: fullstack-nextjs
+variables:
+  - secret: true
+    name: API_KEY
