@@ -55,7 +55,7 @@ export const registerUser = async (
   try {
     await db.insert(users).values({ username: formVals.username, name: formVals.name, passwordHash });
   } catch (error) {
-    console.log("Unexpected error:", error);
+    console.error("Unexpected error:", error);
     return {
       error: "An unexpected error occurred",
       values: formVals
@@ -69,7 +69,6 @@ export const registerUser = async (
 export const generateNewToken = async (formData: FormData) => {
   const username = formData.get("username") as string;
   if (!username) {
-    console.log(username);
     return;
   };
 
@@ -78,7 +77,7 @@ export const generateNewToken = async (formData: FormData) => {
     await updateToken(username, newToken);
   }
   catch (error) {
-    console.log("unexpected error", error)
+    console.error("unexpected error", error)
   }
 
   revalidatePath("/me");
