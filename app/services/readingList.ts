@@ -18,4 +18,8 @@ export const getUserReadingList = async (userId: number) => {
             }
         }
     });
-} 
+}
+
+export const insertToReadingList = async (userId: number, blogId: number) => {
+    return await db.insert(readingList).values({blogId, userId});
+}
