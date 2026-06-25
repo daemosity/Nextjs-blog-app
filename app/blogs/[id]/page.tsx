@@ -1,6 +1,8 @@
 import { notFound } from "next/navigation";
 import { getBlogById } from "@/app/services/blogs";
 import { addLike } from "@/app/actions/blogs";
+import { getCurrentUserReadingList } from "@/app/services/session";
+import { addToReadingList } from "@/app/actions/readingList";
 
 const BlogPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
@@ -9,6 +11,11 @@ const BlogPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   if (!blog) {
     notFound();
   }
+
+  const user = await getCurrentUserReadingList();
+  const currReadingList: Set<number> = new Set(
+    user?.readingList.map((listItem) => listItem.blogId),
+  );
 
   return (
     <div>
@@ -22,6 +29,13 @@ const BlogPage = async ({ params }: { params: Promise<{ id: string }> }) => {
         <input type="hidden" name="id" value={blog.id} />
         <button type="submit">Like</button>
       </form>
+      {user && !currReadingList.has(blog.id) ? (
+        <form action={addToReadingList}>
+          <input type="hidden" name="blogId" value={blog.id} />
+          <input type="hidden" name="userId" value={user.id} />
+          <button type="submit">add to reading list</button>
+        </form>
+      ) : null}
     </div>
   );
 };
