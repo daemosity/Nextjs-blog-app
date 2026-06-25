@@ -21,6 +21,9 @@ export const users = pgTable("users", {
   token: text("token").unique(),
 });
 
+export type InsertUser = typeof users.$inferInsert;
+export type SelectUser = typeof users.$inferSelect;
+
 export const usersRelations = relations(users, ({ many }) => ({
   blogs: many(blogsTable),
 }));

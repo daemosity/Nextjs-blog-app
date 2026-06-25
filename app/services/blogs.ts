@@ -3,6 +3,8 @@ import { db } from "@/db";
 import { blogsTable, SelectBlog } from '@/db/schema';
 import { getCurrentUser } from "./session";
 
+export type BlogPublicInfo = Omit<SelectBlog, "id" | "userId">
+
 export const getBlogs = async (filter: string = ''): Promise<SelectBlog[]> => {
     return await db.select().from(blogsTable).where(ilike(blogsTable.title, `%${filter}%`));
 }
