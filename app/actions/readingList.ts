@@ -19,3 +19,8 @@ export const addToReadingList = async (formData: FormData) => {
         console.error(error);
     }
 }
+
+export const markRead = async(formData:FormData) => {
+    console.log("mark read called");
+    console.log(formData);
+}
