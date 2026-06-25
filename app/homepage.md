@@ -1,0 +1,23 @@
+# Welcome to Blogster
+
+This is a **modern blogging platform** built with Next.js, featuring user authentication, blog post management, and a clean, intuitive interface.
+
+## Features
+
+- **Create and Manage Blogs** - Write and publish your thoughts
+- **User Profiles** - Personalized user pages
+- **Authentication** - Secure login and registration
+- **Comments** - Engage with blog posts
+
+## Getting Started
+
+To start exploring:
+
+1. [Register](/registration) for a new account
+2. [Login](/login) to access your dashboard
+3. [Create a new blog post](/blogs/new)
+4. View [all blogs](/blogs) and [users](/users)
+
+---
+
+Built using Next.js, React, and Drizzle ORM.

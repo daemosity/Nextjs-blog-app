@@ -1,4 +1,10 @@
+import Homepage from "./homepage.md";
+
 const Home = () => {
-  return <div>Welcome to Blogster!</div>;
+  return (
+    <div className="markdown">
+      <Homepage />
+    </div>
+  );
 };
 export default Home;
