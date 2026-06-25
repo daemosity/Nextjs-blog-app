@@ -4,6 +4,7 @@ import { getUsers } from "@/app/services/users";
 const Users = async () => {
   const usersList = await getUsers();
 
+  if (!usersList) return null;
   return (
     <div>
       <h2>Users List</h2>

@@ -27,10 +27,11 @@ export const registerUser = async (
   const password = formData.get("password") as string;
   const passwordConfirm = formData.get("passwordConfirm") as string;
 
+  const formVals = { username, name, password, passwordConfirm };
   if (!(username?.length > 3) || !(password?.length > 3)) {
     return {
       error: "All fields must be at least 4 characters long",
-      values: { username, name, password, passwordConfirm }
+      values: formVals
     };
   }
 
@@ -38,26 +39,26 @@ export const registerUser = async (
   if (userExists) {
     return {
       error: "Username already exists",
-      values: { username, name, password, passwordConfirm }
+      values: formVals
     };
   }
 
   if (password !== passwordConfirm) {
     return {
       error: "Passwords do not match",
-      values: { username, name, password, passwordConfirm: '' }
+      values: { ...formVals, passwordConfirm: '' }
     };
   }
 
   const passwordHash = await bcrypt.hash(password, 10);
 
   try {
-    await db.insert(users).values({ username, name, passwordHash });
+    await db.insert(users).values({ username: formVals.username, name: formVals.name, passwordHash });
   } catch (error) {
     console.log("Unexpected error:", error);
     return {
       error: "An unexpected error occurred",
-      values: { username, name, password, passwordConfirm }
+      values: formVals
     };
   }
 
@@ -66,11 +67,19 @@ export const registerUser = async (
 }
 
 export const generateNewToken = async (formData: FormData) => {
-  const username = formData.get("username");
-  if (!username) return;
+  const username = formData.get("username") as string;
+  if (!username) {
+    console.log(username);
+    return;
+  };
 
   const newToken = randomUUID();
-  await updateToken(String(username), newToken);
+  try {
+    await updateToken(username, newToken);
+  }
+  catch (error) {
+    console.log("unexpected error", error)
+  }
 
   revalidatePath("/me");
 }

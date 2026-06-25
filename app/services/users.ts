@@ -28,8 +28,8 @@ export const getUserByUsername = async (username: string) => {
     });
 }
 
-export const updateToken = async (username: string, token: string): Promise<void> => {
-    db.update(users).set({token}).where(eq(users.username, username));
+export const updateToken = async (username: string, token: string) => {
+    return db.update(users).set({token: token}).where(eq(users.username, username));
 }
 
 export const getUserByAPIToken = async (token: string): Promise<UserAndBlogPublicInfo | undefined> => {
