@@ -1,6 +1,6 @@
 import { eq, ilike} from "drizzle-orm";
-import { db } from "@/db";
-import { blogsTable, SelectBlog } from '@/db/schema';
+import { db, txDb } from "@/db";
+import { blogsTable, readingList, SelectBlog } from '@/db/schema';
 import { getCurrentUser } from "./session";
 
 export type BlogPublicInfo = Omit<SelectBlog, "id" | "userId">
@@ -14,7 +14,12 @@ export const addBlog = async (title: string, author: string, url: string) => {
     if (!user) {
         throw new Error("Not logged in");
     }
-    return await db.insert(blogsTable).values({ title, author, url, userId: user.id }).returning();
+
+    return await txDb.transaction(async (tx) => {
+        const [{ id: blogId }, ...rest] = await db.insert(blogsTable).values({ title, author, url, userId: user.id }).returning({ id: blogsTable.id});
+        if (!blogId) tx.rollback();
+        await db.insert(readingList).values({ userId: user.id, blogId})
+    })
 }
 
 export const getBlogById = async (id: number) => {
