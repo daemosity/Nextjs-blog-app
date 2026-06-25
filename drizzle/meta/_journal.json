@@ -36,6 +36,13 @@
       "when": 1782337636190,
       "tag": "0004_elite_zarek",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1782356390390,
+      "tag": "0005_nosy_molly_hayes",
+      "breakpoints": true
     }
   ]
 }

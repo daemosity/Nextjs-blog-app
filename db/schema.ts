@@ -1,5 +1,5 @@
-import { pgTable, serial, text, integer } from "drizzle-orm/pg-core"
-import { relations } from "drizzle-orm";
+import { pgTable, serial, text, integer, boolean } from "drizzle-orm/pg-core"
+import { Many, relations } from "drizzle-orm";
 
 export const blogsTable = pgTable("blogs", {
   id: serial("id").primaryKey(),
@@ -24,13 +24,38 @@ export const users = pgTable("users", {
 export type InsertUser = typeof users.$inferInsert;
 export type SelectUser = typeof users.$inferSelect;
 
+export const readingList = pgTable("reading_list", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").notNull().references(() => users.id),
+  blogId: integer("blog_id").notNull().references(() => blogsTable.id),
+  read: boolean("read").notNull().default(false),
+});
+
+export type InsertReadingList = typeof readingList.$inferInsert;
+export type SelectReadingList = typeof readingList.$inferSelect;
+
+// Table Relations
+
 export const usersRelations = relations(users, ({ many }) => ({
   blogs: many(blogsTable),
+  readingList: many(readingList),
 }));
 
-export const blogsRelations = relations(blogsTable, ({ one }) => ({
+export const blogsRelations = relations(blogsTable, ({ one, many }) => ({
   user: one(users, {
     fields: [blogsTable.userId],
+    references: [users.id],
+  }),
+  readingList: many(readingList),
+}));
+
+export const readingListRelations = relations(readingList, ({ one }) => ({
+  blog: one(blogsTable, {
+    fields: [readingList.blogId],
+    references: [blogsTable.id],
+  }),
+  user: one(users, {
+    fields: [readingList.userId],
     references: [users.id],
   }),
 }));
