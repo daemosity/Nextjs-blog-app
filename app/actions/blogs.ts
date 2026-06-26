@@ -4,11 +4,7 @@ import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { addBlog, incrementLike } from "@/app/services/blogs";
 import { auth } from "@/auth";
-
-export type ActionStatus = {
-  error: string;
-  success?: boolean;
-};
+import { ActionStatus } from "../components/NotificationContext";
 
 export const createBlog = async (
   prevState: ActionStatus,

@@ -8,26 +8,26 @@ export default function NavBar() {
 
   return (
     <nav>
-      <Link href="/">Home</Link>
+      <Link href="/">home</Link>
       {" | "}
-      <Link href="/users">Users</Link>
+      <Link href="/users">users</Link>
       {" | "}
-      <Link href="/blogs">Blogs</Link>
+      <Link href="/blogs">blogs</Link>
       {" | "}
       {session ? (
         <>
-          <Link href="/blogs/new">New Blog</Link>
+          <Link href="/blogs/new">new blog</Link>
           {" | "}
-          <Link href="/me">Me</Link>
+          <Link href="/me">me</Link>
           {" | "}
           <em>{session.user?.name} logged in</em>{" "}
           <button onClick={() => signOut()}>Logout</button>
         </>
       ) : (
         <>
-          <Link href="/login">Login</Link>
+          <Link href="/login">login</Link>
           {" | "}
-          <Link href="/registration">Register</Link>
+          <Link href="/register">register</Link>
         </>
       )}
     </nav>

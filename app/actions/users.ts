@@ -4,22 +4,17 @@ import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import bcrypt from "bcryptjs";
 import { randomUUID } from "crypto";
-import { db } from "@/db";
-import { users } from "@/db/schema";
-import { getUserByUsername, updateToken } from '../services/users';
+import { getUserByUsername, insertUser, updateToken } from '../services/users';
+import { ActionStatus } from "../components/NotificationContext";
 
-export type RegistrationFormData = {
-  error: string;
-  values: {
-    username?: string;
-    name?: string;
-    password?: string;
-    passwordConfirm?: string;
-  }
-}
+const initialState: ActionStatus = {
+  error: "",
+  success: false,
+  testFlag: ""
+};
 
 export const registerUser = async (
-  prevState: RegistrationFormData,
+  prevState: ActionStatus,
   formData: FormData, 
 ) => {
   const username = (formData.get("username") as string)?.trim();
@@ -31,7 +26,8 @@ export const registerUser = async (
   if (!(username?.length > 3) || !(password?.length > 3)) {
     return {
       error: "All fields must be at least 4 characters long",
-      values: formVals
+      success: false,
+      testFlag: "username-error"
     };
   }
 
@@ -39,26 +35,27 @@ export const registerUser = async (
   if (userExists) {
     return {
       error: "Username already exists",
-      values: formVals
+      success: false,
     };
   }
 
   if (password !== passwordConfirm) {
     return {
       error: "Passwords do not match",
-      values: { ...formVals, passwordConfirm: '' }
+      success: false,
+      testFlag: "passwordConfirm-error"
     };
   }
 
   const passwordHash = await bcrypt.hash(password, 10);
 
   try {
-    await db.insert(users).values({ username: formVals.username, name: formVals.name, passwordHash });
+    await insertUser(formVals.username, formVals.name, passwordHash);
   } catch (error) {
     console.error("Unexpected error:", error);
     return {
       error: "An unexpected error occurred",
-      values: formVals
+      success: false,
     };
   }
 

@@ -6,9 +6,9 @@ import NewBlogForm from "./NewBlogForm";
 const NewBlog = async () => {
   const session = await auth();
 
-  if (!session?.user?.email) {
-    redirect("/login");
-  }
+  // if (!session?.user?.email) {
+  //   redirect("/login");
+  // }
 
   return (
     <div>

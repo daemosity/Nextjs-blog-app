@@ -2,10 +2,13 @@
 
 import { useActionState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { createBlog, ActionStatus } from "@/app/actions/blogs";
-import { useNotification } from "@/app/components/NotificationContext";
+import { createBlog } from "@/app/actions/blogs";
+import {
+  ActionStatus,
+  useNotification,
+} from "@/app/components/NotificationContext";
 
-const initialState: ActionStatus = {
+export const initialState: ActionStatus = {
   error: "",
   success: false,
 };
@@ -18,7 +21,7 @@ const NewBlogForm = () => {
 
   useEffect(() => {
     if (state.success) {
-      showNotification("Blog created successfully!");
+      showNotification("Blog created successfully!", "success", "notification");
       router.push("/blogs");
     }
   }, [state, showNotification, router]);
@@ -26,18 +29,25 @@ const NewBlogForm = () => {
   return (
     <form action={formAction}>
       <div>
-        <label htmlFor="title">Title:</label>
-        <input type="text" name="title" placeholder="Title" />
+        <label htmlFor="blog-title">Title</label>
+        <input type="text" id="blog-title" name="title" placeholder="Title" />
       </div>
       <div>
-        <label htmlFor="author">Author:</label>
-        <input type="text" name="author" placeholder="Author" />
+        <label htmlFor="blog-author">Author</label>
+        <input
+          type="text"
+          id="blog-author"
+          name="author"
+          placeholder="Author"
+        />
       </div>
       <div>
-        <label htmlFor="url">URL:</label>
-        <input type="text" name="url" placeholder="url" />
+        <label htmlFor="blog-url">URL</label>
+        <input type="text" id="blog-url" name="url" placeholder="url" />
       </div>
-      <button type="submit">Submit</button>
+      <button data-testid="create-blog-button" type="submit">
+        Create
+      </button>
       {state.error && <p style={{ color: "red" }}>{state.error}</p>}
     </form>
   );

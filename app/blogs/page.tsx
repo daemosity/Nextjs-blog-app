@@ -20,18 +20,21 @@ const Blogs = async ({
       <h2>Blogs</h2>
       <form>
         <input
+          data-testid="filter-input"
           type="text"
           name="filter"
           placeholder="Search blogs..."
           defaultValue={filter}
         />
-        <button type="submit">Search</button>
+        <button data-testid="search-button" type="submit">
+          Search
+        </button>
       </form>
-      <ul>
+      <ul data-testid="blogs-list">
         {blogs.map((blog) => (
           <li key={blog.id}>
             <Link href={`/blogs/${blog.id}`}>{blog.title}</Link> by{" "}
-            {blog.author}
+            {blog.author} {`${blog.likes} likes`}
           </li>
         ))}
       </ul>

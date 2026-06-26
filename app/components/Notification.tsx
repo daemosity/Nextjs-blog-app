@@ -3,7 +3,7 @@
 import { useNotification } from "./NotificationContext";
 
 export default function Notification() {
-  const { message, type } = useNotification();
+  const { message, type, testFlag } = useNotification();
 
   if (!message) return null;
 
@@ -15,5 +15,9 @@ export default function Notification() {
     backgroundColor: type === "success" ? "#16a34a" : "#dc2626",
   };
 
-  return <div style={style}>{message}</div>;
+  return (
+    <div data-testid={testFlag} style={style}>
+      {message}
+    </div>
+  );
 }

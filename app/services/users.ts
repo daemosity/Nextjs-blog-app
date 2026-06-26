@@ -52,3 +52,7 @@ export const getUserByAPIToken = async (token: string): Promise<UserAndBlogPubli
         },
     });
 }
+
+export const insertUser = async (username: string, name: string, passwordHash: string) => {
+    await db.insert(users).values({ username: username, name: name, passwordHash: passwordHash });
+}

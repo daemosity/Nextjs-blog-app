@@ -8,6 +8,7 @@ const UserPage = async ({
   params: Promise<{ username: string }>;
 }) => {
   const { username } = await params;
+  console.log(username);
   const user = await getUserByUsername(username);
 
   if (!user) {
