@@ -50,6 +50,9 @@ jobs:
       - name: Run database migrations
         run: npx drizzle-kit push
 
+      - name: Start server
+        run: npm run dev
+
       - name: Run Playwright tests
         run: npx playwright test
 
