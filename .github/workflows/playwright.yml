@@ -19,7 +19,7 @@ jobs:
           node-version: lts/*
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
@@ -49,6 +49,9 @@ jobs:
 
       - name: Run database migrations
         run: npx drizzle-kit push
+
+      - name: Start development server
+        run: npm run dev &
 
       - name: Run Playwright tests
         run: npx playwright test
